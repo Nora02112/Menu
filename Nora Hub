@@ -74,6 +74,3 @@ local Button = Section:AddButton({
 	 loadstring(game:HttpGet("https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/BloxFruit/Chest/AllDevices.lua"))()
     end
 })
-Dropdown:AddOption("Option 4") -- Thêm tùy chọn mới
-Dropdown:Refresh({"Option A", "Option B", "Option C"}, {"Option A"}) -- Làm mới danh sách dropdown
-print(Dropdown.Value) -- In giá trị hiện tại
