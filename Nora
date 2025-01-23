@@ -1,0 +1,76 @@
+local UiMakeLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Msunehub/Uilm/refs/heads/main/UiMat1.lua"))()
+local Notify = UiMakeLib:MakeNotify({
+	["Title"] = "Nora Hub",
+	["Description"] = "Thông Báo",
+	["Color"] = Color3.fromRGB(151, 207, 23),
+	["Content"] = "Cảm ơn đã sử dụng Nora Hub",
+	["Time"] = 3,
+	["Delay"] = 10
+})
+local Window = UiMakeLib:MakeGui({
+	["NameHub"] = "Nora Hub",
+	["Description"] = "Script HUB",
+	["Color"] = Color3.fromRGB(151, 207, 23),
+	["Logo Player"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..game:GetService("Players").LocalPlayer.UserId .."&width=420&height=420&format=png",
+	["Name Player"] = tostring(game:GetService("Players").LocalPlayer.Name),
+	["Tab Width"] = 140
+})
+local Tab1 = Window:CreateTab({
+	["Name"] = "Main",
+	["Icon"] = "rbxassetid://7733960981"
+})
+local Tab2 = Window:CreateTab({
+	["Name"] = "Cài đặt",
+	["Icon"] = "rbxassetid://7734053495"
+})
+local Section = Tab1:AddSection("Blox Fruit Hub")
+local Button = Section:AddButton({
+	["Title"] = "Fix lag",
+	["Content"] = "Hỗ trợ máy yếu",
+	["Icon"] = "rbxassetid://16932740082",
+	["Callback"] = function()
+	 loadstring(game:HttpGet("https://raw.githubusercontent.com/Yumiara/Overflow/refs/heads/main/Main.lua"))()
+	end
+})
+local Button = Section:AddButton({
+	["Title"] = "Flow Hub",
+	["Content"] = "Cần Get Key",
+	["Icon"] = "rbxassetid://16932740082",
+	["Callback"] = function()
+	 loadstring(game:HttpGet("https://raw.githubusercontent.com/KOBENFF/sdfd/refs/heads/main/Koatta.txt"))()
+    end
+})
+local Button = Section:AddButton({
+	["Title"] = "Redz Hub",
+	["Content"] = "Free xài ổn",
+	["Icon"] = "rbxassetid://16932740082",
+	["Callback"] = function()
+	 loadstring(game:HttpGet("https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua"))()
+    end
+})
+local Button = Section:AddButton({
+	["Title"] = "Zen Hub",
+	["Content"] = "Cần Get Key",
+	["Icon"] = "rbxassetid://16932740082",
+	["Callback"] = function()
+	 loadstring(game:HttpGet("https://raw.githubusercontent.com/Zenhubtop/zen_hub_pr/main/zennewwwwui.lua", true))()
+    end
+})
+local Button = Section:AddButton({
+	["Title"] = "Alchemy Hub",
+	["Content"] = "Cần Get Key",
+	["Icon"] = "rbxassetid://16932740082",
+	["Callback"] = function()
+	 loadstring(game:HttpGet("https://scripts.alchemyhub.xyz"))()
+    end
+})
+local Button = Section:AddButton({
+	["Title"] = "ThunderZ Hub",
+	["Content"] = "Cần Get Key",
+	["Icon"] = "rbxassetid://16932740082",
+	["Callback"] = function()
+	 _G.Team = "Pirate" -- "Marine" or "Pirate"
+	 _G.MetodeTeleport = "Instant" --"Instant" or "Tween"
+	 loadstring(game:HttpGet("https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/BloxFruit/Chest/AllDevices.lua"))()
+    end
+})
