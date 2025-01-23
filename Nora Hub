@@ -1,0 +1,136 @@
+local UiMakeLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Msunehub/Uilm/refs/heads/main/UiMat1.lua"))()
+
+-- Tạo thông báo
+local Notify = UiMakeLib:MakeNotify({
+    ["Title"] = "Nora Hub",
+    ["Description"] = "Thông Báo",
+    ["Color"] = Color3.fromRGB(151, 207, 23),
+    ["Content"] = "Cảm ơn đã sử dụng Nora Hub",
+    ["Time"] = 3,
+    ["Delay"] = 10
+})
+
+-- Tạo cửa sổ giao diện
+local Window = UiMakeLib:MakeGui({
+    ["NameHub"] = "Nora Hub",
+    ["Description"] = "Nơi chứa nhiều script",
+    ["Color"] = Color3.fromRGB(151, 207, 23),
+    ["Logo Player"] = "https://www.roblox.com/headshot-thumbnail/image?userId="..game.Players.LocalPlayer.UserId.."&width=420&height=420&format=png",
+    ["Name Player"] = tostring(game.Players.LocalPlayer.Name),
+    ["Tab Width"] = 140
+})
+
+-- Tạo Tabs
+local TabMain = Window:CreateTab({
+    ["Name"] = "Main",
+    ["Icon"] = "rbxassetid://7733960981"
+})
+
+local TabSettings = Window:CreateTab({
+    ["Name"] = "Cài đặt",
+    ["Icon"] = "rbxassetid://7734053495"
+})
+
+-- Thêm section và các nút trong Tab "Main"
+local Section = TabMain:AddSection("Blox Fruit Hub")
+
+-- Danh sách scripts
+local Scripts = {
+    {
+        ["Title"] = "Fix lag",
+        ["Content"] = "Hỗ trợ máy yếu",
+        ["Url"] = "loadstring(game:HttpGet("https://raw.githubusercontent.com/TurboLite/Script/main/FixLag.lua"))()"
+    },
+    {
+        ["Title"] = "Flow Hub",
+        ["Content"] = "Cần Get Key",
+        ["Url"] = "loadstring(game:HttpGet("https://raw.githubusercontent.com/Yumiara/Overflow/refs/heads/main/Main.lua"))()"
+    },
+    {
+        ["Title"] = "Redz Hub",
+        ["Content"] = "Free xài ổn",
+        ["Url"] = "https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua"
+    },
+    {
+        ["Title"] = "Zen Hub",
+        ["Content"] = "Cần Get Key",
+        ["Url"] = "https://raw.githubusercontent.com/Zenhubtop/zen_hub_pr/main/zennewwwwui.lua"
+    },
+    {
+        ["Title"] = "Alchemy Hub",
+        ["Content"] = "Cần Get Key",
+        ["Url"] = "https://scripts.alchemyhub.xyz"
+    },
+    {
+        ["Title"] = "ThunderZ Hub",
+        ["Content"] = "Cần Get Key",
+        ["Url"] = "https://raw.githubusercontent.com/ThundarZ/Welcome/refs/heads/main/Main/BloxFruit/Chest/AllDevices.lua",
+        ["ExtraSetup"] = function()
+            _G.Team = "Pirate" -- "Marine" hoặc "Pirate"
+            _G.MetodeTeleport = "Instant" -- "Instant" hoặc "Tween"
+        end
+    }
+}
+
+-- Thêm nút từ danh sách Scripts
+for _, script in ipairs(Scripts) do
+    Section:AddButton({
+        ["Title"] = script.Title,
+        ["Content"] = script.Content,
+        ["Icon"] = "rbxassetid://16932740082",
+        ["Callback"] = function()
+            if script.ExtraSetup then
+                script.ExtraSetup()
+            end
+            local success, err = pcall(function()
+                loadstring(game:HttpGet(script.Url))()
+            end)
+            if not success then
+                warn("Không thể tải script: " .. script.Title .. " - Lỗi: " .. tostring(err))
+            end
+            -- Ẩn menu sau khi chạy script
+            Window.Gui.Enabled = false
+        end
+    })
+end
+
+-- Ẩn/hiện menu khi nhấn "Ctrl trái"
+local UserInputService = game:GetService("UserInputService")
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.LeftControl then
+        Window.Gui.Enabled = not Window.Gui.Enabled -- Toggle trạng thái ẩn/hiện
+    end
+end)
+-- Thêm nút Auto Collect Chest
+Section:AddButton({
+    ["Title"] = "Auto Collect Chest",
+    ["Content"] = "Teleport và nhặt tất cả rương",
+    ["Icon"] = "rbxassetid://16932740082",
+    ["Callback"] = function()
+        -- Hàm teleport và nhặt rương
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+
+        -- Đảm bảo nhân vật đã tải
+        if not character:FindFirstChild("HumanoidRootPart") then
+            warn("Không tìm thấy HumanoidRootPart. Vui lòng chờ nhân vật tải hoàn chỉnh!")
+            return
+        end
+
+        local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+        local chestFolder = game:GetService("Workspace"):FindFirstChild("Chests") -- Thư mục chứa các rương (thay đổi nếu tên khác)
+
+        if chestFolder then
+            for _, chest in ipairs(chestFolder:GetChildren()) do
+                if chest:IsA("Model") and chest:FindFirstChild("TouchInterest") then
+                    local chestPosition = chest.PrimaryPart and chest.PrimaryPart.Position or chest:GetPivot().Position
+                    humanoidRootPart.CFrame = CFrame.new(chestPosition + Vector3.new(0, 5, 0)) -- Teleport đến vị trí rương
+                    wait(0.5) -- Delay ngắn để đảm bảo nhặt rương
+                end
+            end
+            print("Hoàn tất teleport và nhặt rương!")
+        else
+            warn("Không tìm thấy thư mục Chests. Vui lòng kiểm tra tên thư mục trong Workspace.")
+        end
+    end
+})
